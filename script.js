@@ -124,3 +124,62 @@ const GameController = () => {
 
     return { playTurn, getCurrentTurn, board, restartGame, isGameOver, getResult };
 }
+
+const ScreenController = () => {
+    const game = GameController();
+    const boardContainer = document.querySelector(".board-container");
+
+    const displayBoard = () => {
+        boardContainer.textContent = "";
+
+        for (let i = 0; i < game.board.length; ++i) {
+            const spot = document.createElement("button");
+            spot.classList.add("spot");
+            //spot.setAttribute("data-index", i);
+
+            spot.addEventListener("click", (e) => {
+                // if game is over do not let players keep putting markers(X and O) on the board
+                // or if spot is already filled, do not playTurn
+                if (game.isGameOver() || spot.textContent !== "") {
+                    return;
+                }
+
+                game.playTurn(i);
+                displayBoard();
+                console.log(game.board);
+                if (game.isGameOver()) {
+                    gameOver();
+                }
+            });
+
+            spot.textContent = game.board[i];
+            boardContainer.appendChild(spot);
+        }
+    }
+
+    const gameOver = () => {
+        const results = document.querySelector(".results");
+
+        if (game.isGameOver()) {
+            const result = document.createElement("div");
+            result.textContent = game.getResult();
+
+            const restartBtn = document.createElement("button");
+            restartBtn.textContent = "Restart";
+
+            restartBtn.addEventListener("click", () => {
+                game.restartGame();
+                displayBoard();
+                result.remove();
+                restartBtn.remove();
+            });
+
+            results.appendChild(result);
+            results.appendChild(restartBtn);
+        }
+    }
+
+    displayBoard();
+}
+
+ScreenController();
