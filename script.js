@@ -30,8 +30,21 @@ const GameBoard = (function () {
 function createPlayer(name, marker) {
     const getName = () => name;
     const getMarker = () => marker;
+    let score = 0;
 
-    return { getName, getMarker };
+    const getScore = () => {
+        return score;
+    }
+
+    const increaseScore = () => {
+        score += 1;
+    }
+
+    const resetScore = () => {
+        score = 0;
+    }
+
+    return { getName, getMarker, increaseScore, getScore };
 }
 
 const GameController = () => {
@@ -110,8 +123,7 @@ const GameController = () => {
         GameBoard.addMarker(getCurrentTurn().getMarker(), index);
 
         if (isGameOver()) {
-            //show winner
-            console.log(getResult());
+            getCurrentTurn().increaseScore();
             return;
         }
         switchTurn();
@@ -122,12 +134,15 @@ const GameController = () => {
         currentTurn = players[0];
     }
 
-    return { playTurn, getCurrentTurn, board, restartGame, isGameOver, getResult };
+    return { playTurn, getCurrentTurn, board, restartGame, isGameOver, getResult, players };
 }
 
 const ScreenController = () => {
     const game = GameController();
     const boardContainer = document.querySelector(".board-container");
+    const score = document.querySelector(".score");
+    score.textContent = `${game.players[0].getScore()}-${game.players[1].getScore()}`;
+    
 
     const displayBoard = () => {
         boardContainer.textContent = "";
@@ -151,7 +166,6 @@ const ScreenController = () => {
                     gameOver();
                 }
             });
-
             spot.textContent = game.board[i];
             boardContainer.appendChild(spot);
         }
@@ -161,6 +175,9 @@ const ScreenController = () => {
         const results = document.querySelector(".results");
 
         if (game.isGameOver()) {
+            // update score
+            score.textContent = `${game.players[0].getScore()}-${game.players[1].getScore()}`;
+
             const result = document.createElement("div");
             result.textContent = game.getResult();
 
