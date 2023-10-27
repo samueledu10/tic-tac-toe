@@ -1,5 +1,75 @@
+* {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+body {
+    margin: 0;
+    background-color: black;
+}
+
+.score-container {
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    font-size: 25px;
+    color: white;
+    border-bottom: 1px solid silver;
+}
+
+.score {
+    background-color: rgba(192, 192, 192, 0.837);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    
+    font-size: 30px;
+    color: black;
+}
+
 .board-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+    
+}
+
+.board {
     display: grid;
-    grid-template-columns: repeat(3, 50px);
-    grid-template-rows: repeat(3, 50px);
+    gap: 5px;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+    background-color: black;
+}
+
+.board button {
+    border: none;
+    font-size: 60px;
+}
+
+.spot {
+    border-radius: 5px;
+}
+
+.results {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    margin-top: 20px;
+}
+
+.results button {
+    border: none;
+    width: 100px;
+    height: 50px;
+    font-size: 20px;
+}
+
+.results .restart {
+    font-size: 30px;
 }

@@ -69,7 +69,7 @@ const GameController = () => {
 
         // all win conditions
         if (board[0] === marker && board[1] === marker && board[2] === marker) {
-
+            
             result = `${name} won!`;
             return true;
         } else if (board[3] === marker && board[4] === marker && board[5] === marker) {
@@ -77,19 +77,19 @@ const GameController = () => {
             result = `${name} won!`;
             return true;
         } else if (board[6] === marker && board[7] === marker && board[8] === marker) {
-
+            
             result = `${name} won!`;
             return true;
         } else if (board[0] === marker && board[3] === marker && board[6] === marker) {
-
+            
             result = `${name} won!`;
             return true;
         } else if (board[1] === marker && board[4] === marker && board[7] === marker) {
-
+        
             result = `${name} won!`;
             return true;
         } else if (board[2] === marker && board[5] === marker && board[8] === marker) {
-
+            
             result = `${name} won!`;
             return true;
         } else if (board[0] === marker && board[4] === marker && board[8] === marker) {
@@ -97,7 +97,7 @@ const GameController = () => {
             result = `${name} won!`;
             return true;
         } else if (board[2] === marker && board[4] === marker && board[6] === marker) {
-
+            
             result = `${name} won!`;
             return true;
         }
@@ -123,7 +123,6 @@ const GameController = () => {
         GameBoard.addMarker(getCurrentTurn().getMarker(), index);
 
         if (isGameOver()) {
-            getCurrentTurn().increaseScore();
             return;
         }
         switchTurn();
@@ -139,7 +138,7 @@ const GameController = () => {
 
 const ScreenController = () => {
     const game = GameController();
-    const boardContainer = document.querySelector(".board-container");
+    const boardContainer = document.querySelector(".board");
     const score = document.querySelector(".score");
     score.textContent = `${game.players[0].getScore()}-${game.players[1].getScore()}`;
     
@@ -161,8 +160,11 @@ const ScreenController = () => {
 
                 game.playTurn(i);
                 displayBoard();
-                console.log(game.board);
+
                 if (game.isGameOver()) {
+                    if (game.getResult() !== "Tie") {
+                        game.getCurrentTurn().increaseScore();
+                    }
                     gameOver();
                 }
             });
@@ -179,6 +181,7 @@ const ScreenController = () => {
             score.textContent = `${game.players[0].getScore()}-${game.players[1].getScore()}`;
 
             const result = document.createElement("div");
+            result.classList.add("restart");
             result.textContent = game.getResult();
 
             const restartBtn = document.createElement("button");
