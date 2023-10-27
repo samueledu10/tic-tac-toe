@@ -7,6 +7,19 @@ body {
     background-color: black;
 }
 
+.logo {
+    display: flex;
+    justify-content: center;
+}
+
+.logo h2 {
+    color: white;
+    font-weight: 400;
+    font-size: 30px;
+    font-style: italic;
+    margin: 10px;
+}
+
 .score-container {
     height: 60px;
     display: flex;
